@@ -197,28 +197,22 @@
     <script>
         // ============ DATA ============
         // IMPORTANT: Replace this with your full 120,000 row JSON data
-        const inventoryData = [
-            {"ID":1,"Product_Code":"0240R005BN4HC/-B6","ProdLine":"NETTED","Product_Code_Description":"0240R005BN4HC.B6","UOM_Stock":"EA","QTY":"","Unit_Cost":0,"Extended_Cost":"","Location":0,"User":""},
-            {"ID":2,"Product_Code":"305.11.00","ProdLine":"MISC1","Product_Code_Description":"DIN CONNECTOR 43650 FORM B","UOM_Stock":"EA","QTY":"","Unit_Cost":0,"Extended_Cost":"","Location":0,"User":""},
-            {"ID":3,"Product_Code":"C80300-2020S","ProdLine":"MISC1","Product_Code_Description":"1 1/4\" VEP PLUG X 1 1/4\" FSAE","UOM_Stock":"EA","QTY":"","Unit_Cost":188.39,"Extended_Cost":"","Location":0,"User":""},
-            {"ID":4,"Product_Code":"JEN 452J-5","ProdLine":"NETTED","Product_Code_Description":"5\" 125 CI IBBM NRS FLANGE GATE VALVE","UOM_Stock":"EA","QTY":"","Unit_Cost":0,"Extended_Cost":"","Location":0,"User":""},
-            {"ID":5,"Product_Code":"RC10NK0","ProdLine":"FITTIN","Product_Code_Description":"ENERPAC CYLINDER REPAIR KIT RC104","UOM_Stock":"EA","QTY":"","Unit_Cost":155.12,"Extended_Cost":"","Location":0,"User":""},
-            {"ID":6,"Product_Code":"-4-2M-B-SP-30","ProdLine":"MISC3","Product_Code_Description":"1/8\" NPT PRESSURE SWITCH N/C 200-950PSI PRESS","UOM_Stock":"EA","QTY":"","Unit_Cost":0,"Extended_Cost":"","Location":0,"User":""},
-            {"ID":7,"Product_Code":"0-250","ProdLine":"NETTED","Product_Code_Description":"FITTING","UOM_Stock":"EA","QTY":"","Unit_Cost":0,"Extended_Cost":"","Location":0,"User":""},
-            {"ID":8,"Product_Code":"0.080\"THK-FLEXIBLE-VINYL","ProdLine":"NETTED","Product_Code_Description":".080\" THICK, CLEAR VINYL FLEXIBLE SHEET 4' X 8' SHEET","UOM_Stock":"EA","QTY":"","Unit_Cost":133.13,"Extended_Cost":"","Location":0,"User":""},
-            {"ID":9,"Product_Code":"0.709\"BAR X 10R12","ProdLine":"NETTED","Product_Code_Description":"CHROME ROD DIA. 18 MM","UOM_Stock":"FT","QTY":"","Unit_Cost":0,"Extended_Cost":"","Location":0,"User":""},
-            {"ID":10,"Product_Code":"0.750\" BAR X 10R12","ProdLine":"NETTED","Product_Code_Description":"CHROME BAR 0.750\" OD","UOM_Stock":"FT","QTY":"","Unit_Cost":10.52,"Extended_Cost":"","Location":0,"User":""},
-            {"ID":11,"Product_Code":"0.875\"BAR X 20R24","ProdLine":"NETTED","Product_Code_Description":"PISTON ROD 7/8\"","UOM_Stock":"FT","QTY":"","Unit_Cost":10.76,"Extended_Cost":"","Location":0,"User":""},
-            {"ID":12,"Product_Code":"0.984\" BAR X 246' LONG","ProdLine":"NETTED","Product_Code_Description":"CHROME BAR 0.984\" OD (25 MM) X 20.5 FEET LONG","UOM_Stock":"EA","QTY":"","Unit_Cost":343.02,"Extended_Cost":"","Location":0,"User":""},
-            {"ID":13,"Product_Code":"0.984\" CHROME BAR","ProdLine":"NETTED","Product_Code_Description":"CHROME BAR 0.984\" OD (25 MM)","UOM_Stock":"FT","QTY":"","Unit_Cost":20.4,"Extended_Cost":"","Location":0,"User":""},
-            {"ID":14,"Product_Code":"00-5501-PSA","ProdLine":"NETTED","Product_Code_Description":"5\" VINYL SANDING PAD","UOM_Stock":"EA","QTY":"","Unit_Cost":0,"Extended_Cost":"","Location":0,"User":""},
-            {"ID":15,"Product_Code":"00-5502","ProdLine":"NETTED","Product_Code_Description":"5\" VELCRO SANDING PAD","UOM_Stock":"EA","QTY":"","Unit_Cost":0,"Extended_Cost":"","Location":0,"User":""},
-            {"ID":16,"Product_Code":"00-5551","ProdLine":"NETTED","Product_Code_Description":"5\" PAD","UOM_Stock":"EA","QTY":"","Unit_Cost":0,"Extended_Cost":"","Location":0,"User":""},
-            {"ID":17,"Product_Code":"00-5551-PSA","ProdLine":"NETTED","Product_Code_Description":"ORBITAL SANDER PAD","UOM_Stock":"EA","QTY":"","Unit_Cost":0,"Extended_Cost":"","Location":0,"User":""},
-            {"ID":18,"Product_Code":"00000REP","ProdLine":"NETTED","Product_Code_Description":"ECU SOFTWARE UPDATE - HINO","UOM_Stock":"EA","QTY":"","Unit_Cost":1000,"Extended_Cost":"","Location":0,"User":""},
-            {"ID":19,"Product_Code":"635","ProdLine":"Not Found","Product_Code_Description":"3/8\" BENDING YOKE","UOM_Stock":"EA","QTY":"","Unit_Cost":0,"Extended_Cost":"","Location":0,"User":""},
-            {"ID":20,"Product_Code":"738","ProdLine":"Not Found","Product_Code_Description":"SHAFT SEAL","UOM_Stock":"EA","QTY":"","Unit_Cost":0,"Extended_Cost":"","Location":0,"User":""}
-        ];
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwyJKwLNNlAcDa_hoUouUrS4aGJ9ZzfG7YZZj4Xn8yL26qtFegIGidCdq5Nvd-c2-zaUQ/exec';
+        let inventoryData = [];
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwyJKwLNNlAcDa_hoUouUrS4aGJ9ZzfG7YZZj4Xn8yL26qtFegIGidCdq5Nvd-c2-zaUQ/exec';
+
+        // Load data when page loads
+        fetch(SCRIPT_URL)
+          .then(response => response.json())
+          .then(data => {
+            inventoryData = data;
+            document.getElementById('itemCount').textContent = inventoryData.length;
+            if (currentUser) {
+              populateLocations();
+              displayData();
+            }
+          })
+          .catch(err => console.error('Failed to load data:', err));
 
         let transactions = {};
         let currentUser = '';
@@ -352,3 +346,4 @@
     </script>
 </body>
 </html>
+
