@@ -200,10 +200,16 @@
         let inventoryData = [];
 
         // Load data from Google Sheets
-        fetch(SCRIPT_URL)
+    fetch(SCRIPT_URL)
           .then(response => response.json())
           .then(data => {
             inventoryData = data;
+            // Load previously entered quantities into transactions
+            inventoryData.forEach(item => {
+              if (item.QTY && item.QTY !== '' && item.QTY !== 0) {
+                transactions[String(item.Product_Code)] = item.QTY;
+              }
+            });
             document.getElementById('itemCount').textContent = inventoryData.length;
           })
           .catch(err => console.error('Failed to load data:', err));
@@ -368,6 +374,7 @@ function displayData() {
     </script>
 </body>
 </html>
+
 
 
 
