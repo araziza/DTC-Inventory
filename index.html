@@ -134,11 +134,11 @@
                 <div class="range-row">
                     <div>
                         <label>From Part #:</label>
-                        <input type="text" id="rangeStart" placeholder="e.g., B00738" onchange="displayData()" />
+                        <input type="text" id="rangeStart" placeholder="e.g., B00738" oninput="displayData()" />
                     </div>
                     <div>
                         <label>To Part #:</label>
-                        <input type="text" id="rangeEnd" placeholder="e.g., B00900" onchange="displayData()" />
+                        <input type="text" id="rangeEnd" placeholder="e.g., B00900" oninput="displayData()" />
                     </div>
                 </div>
             </div>
@@ -337,6 +337,21 @@
 
         function submitQuantity() {
             transactions[currentPartCode] = parseInt(numberPadValue) || 0;
+            
+            // Save to Google Sheet
+            const part = inventoryData.find(p => p.Product_Code === currentPartCode);
+            if (part) {
+                fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        Product_Code: currentPartCode,
+                        QTY: parseInt(numberPadValue) || 0,
+                        User: currentUser,
+                        Location: part.Location
+                    })
+                }).catch(err => console.error('Failed to save:', err));
+            }
+            
             document.getElementById('numberPadModal').classList.remove('active');
             displayData();
         }
@@ -348,6 +363,7 @@
     </script>
 </body>
 </html>
+
 
 
 
