@@ -223,18 +223,26 @@
         // ============ LOGIN ============
         function startInventory() {
             const userId = document.getElementById('userIdInput').value.trim();
-            if (userId) {
-                currentUser = userId;
-                document.getElementById('userDisplay').text = userId;
-                document.getElementById('itemCount').textContent = inventoryData.length;
-                document.getElementById('loginScreen').style.display = 'none';
-                document.getElementById('appContainer').classList.add('active');
-                populateLocations();
-                displayData();
-                document.getElementById('userIdInput').value = '';
+            if (!userId) {
+                alert('Please enter a Device/User ID');
+                return;
             }
+            
+            if (inventoryData.length === 0) {
+                alert('Inventory data is still loading. Please wait a moment and try again.');
+                return;
+            }
+            
+            currentUser = userId;
+            document.getElementById('userDisplay').textContent = userId;
+            document.getElementById('itemCount').textContent = inventoryData.length;
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('appContainer').classList.add('active');
+            populateLocations();
+            displayData();
+            document.getElementById('userIdInput').value = '';
         }
-
+        
         function logout() {
             currentUser = '';
             transactions = {};
@@ -346,4 +354,5 @@
     </script>
 </body>
 </html>
+
 
