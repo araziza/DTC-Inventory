@@ -84,9 +84,9 @@
     <div class="login-container" id="loginScreen">
         <div class="login-box">
             <h1>DTC Industrial</h1>
-            <p>Physical tory Counter</p>
+            <p>Physical Inventory Counter</p>
             <input type="text" id="userIdInput" placeholder="Enter Device/User ID" autofocus />
-            <button onclick="starttory()">Start tory</button>
+            <button onclick="startInventory()">Start Inventory</button>
         </div>
     </div>
 
@@ -147,7 +147,7 @@
                 <label>Search Part:</label>
                 <div class="search-input">
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M9 17C13.4183 17 17 13.4183 17 9C17 4.58172 13.4183 1 9 1C4.58172 1 1 4.58172 1 9C1 13.4183 4.58172 17 9 17ZM19 19L13.6 13.6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-                    <input type="text" id="partSearch" placeholder="Enter part # or description" oninput="displayData()" />
+                    <input type="text" id="partSearch" placeholder="Enter part # or deion" oninput="displayData()" />
                 </div>
             </div>
 
@@ -157,7 +157,7 @@
                     <thead>
                         <tr>
                             <th>Part #</th>
-                            <th>Description</th>
+                            <th>Deion</th>
                             <th>QTY</th>
                         </tr>
                     </thead>
@@ -194,23 +194,17 @@
         </div>
     </div>
 
-    <script>
+  <script>
         // ============ DATA ============
-        // IMPORTANT: Replace this with your full 120,000 row JSON data
         const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwyJKwLNNlAcDa_hoUouUrS4aGJ9ZzfG7YZZj4Xn8yL26qtFegIGidCdq5Nvd-c2-zaUQ/exec';
         let inventoryData = [];
-        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwyJKwLNNlAcDa_hoUouUrS4aGJ9ZzfG7YZZj4Xn8yL26qtFegIGidCdq5Nvd-c2-zaUQ/exec';
 
-        // Load data when page loads
+        // Load data from Google Sheets
         fetch(SCRIPT_URL)
           .then(response => response.json())
           .then(data => {
             inventoryData = data;
             document.getElementById('itemCount').textContent = inventoryData.length;
-            if (currentUser) {
-              populateLocations();
-              displayData();
-            }
           })
           .catch(err => console.error('Failed to load data:', err));
 
@@ -354,6 +348,7 @@
     </script>
 </body>
 </html>
+
 
 
 
