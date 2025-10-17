@@ -276,20 +276,20 @@
             if (currentMode === 'location') {
                 const loc = document.getElementById('locationSelect').value;
                 if (loc) filtered = inventoryData.filter(item => item.Location == loc);
-            } else if (currentMode === 'range') {
+           } else if (currentMode === 'range') {
                 const start = document.getElementById('rangeStart').value.toUpperCase();
                 const end = document.getElementById('rangeEnd').value.toUpperCase();
                 if (start && end) {
-                    const sorted = [...inventoryData].sort((a, b) => (a.Product_Code || '').localeCompare(b.Product_Code || ''));
+                    const sorted = [...inventoryData].sort((a, b) => (String(a.Product_Code) || '').localeCompare(String(b.Product_Code) || ''));
                     const startIdx = sorted.findIndex(item => (item.Product_Code || '').localeCompare(start) >= 0);
                     const endIdx = sorted.findIndex(item => (item.Product_Code || '').localeCompare(end) > 0);
                     filtered = startIdx >= 0 ? sorted.slice(startIdx, endIdx >= 0 ? endIdx : sorted.length) : [];
                 }
-            } else if (currentMode === 'part') {
+           } else if (currentMode === 'part') {
                 const search = document.getElementById('partSearch').value.toUpperCase();
                 if (search) {
                     filtered = inventoryData.filter(item =>
-                        (item.Product_Code || '').toUpperCase().includes(search) ||
+                        (String(item.Product_Code) || '').toUpperCase().includes(search) ||
                         (item.Product_Code_Description || '').toUpperCase().includes(search)
                     );
                 }
@@ -363,6 +363,7 @@
     </script>
 </body>
 </html>
+
 
 
 
